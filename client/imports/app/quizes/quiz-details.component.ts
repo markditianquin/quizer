@@ -18,6 +18,7 @@ export class QuizDetailsComponent implements OnInit, OnDestroy {
 	quizId: string;
 	paramSub: Subscription;
 	quiz: Quiz;
+	question: Observable<any[]>;
 
 	constructor(
 		private route: ActivatedRoute
@@ -30,6 +31,7 @@ export class QuizDetailsComponent implements OnInit, OnDestroy {
 				this.quizId = quizId
 
 				this.quiz = Quizes.findOne(this.quizId);
+
 			});
 	}
 
