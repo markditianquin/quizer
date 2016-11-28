@@ -12,13 +12,7 @@
   <a [routerLink]="['/']">Cancel</a>
 </form>
 
-<div>
-	<ul>
-		<li *ngFor="let q of quiz.questions | async">
-			{{q.question}}
-		</li>
-	</ul>
-</div>
+
 
 <mc-form [quizId]="quizId"></mc-form>
 <!-- <div>
@@ -31,3 +25,11 @@
 		</li>
 	</ul>
 </div> -->
+
+<div>
+	<ul>
+		<li *ngFor="let q of quiz.questions">
+			{{q.question}}
+		</li>
+	</ul>
+</div>
