@@ -1,13 +1,33 @@
-<form *ngIf="party" (submit)="saveParty()">
+<form *ngIf="quiz" (submit)="saveQuiz()">
   <label>Name</label>
-  <input type="text" [(ngModel)]="party.name" name="name">
+  <input type="text" [(ngModel)]="quiz.name" name="name">
  
   <label>Description</label>
-  <input type="text" [(ngModel)]="party.description" name="description">
+  <input type="text" [(ngModel)]="quiz.description" name="description">
  
-  <label>Location</label>
-  <input type="text" [(ngModel)]="party.location" name="location">
+  <label>Score</label>
+  <input type="number" [(ngModel)]="quiz.tScore" name="tScore">
  
   <button type="submit">Save</button>
   <a [routerLink]="['/']">Cancel</a>
 </form>
+
+<div>
+	<ul>
+		<li *ngFor="let q of quiz.questions | async">
+			{{q.question}}
+		</li>
+	</ul>
+</div>
+
+<mc-form [quizId]="quizId"></mc-form>
+<!-- <div>
+	<ul>
+		<li *ngFor="let q of questions">
+			Q: {{q.name}}, A: {{q.answer}}
+			C: <li *ngFor="d of q.choices">
+				{{d}}
+				</li>
+		</li>
+	</ul>
+</div> -->

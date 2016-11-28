@@ -1,22 +1,23 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
 
-import { Parties } from '../../../../both/collections/parties.collection';
-import { Party } from '../../../../both/models/party.model';
+import { Quizes } from '../../../../both/collections/quizes.collection';
+import { Quiz } from '../../../../both/models/quiz.model';
 
-import template from './party-details.component.html';
+import template from './quiz-details.component.html';
 
 @Component({
-	selector: 'party-details',
+	selector: 'quiz-details',
 	template
 })
-export class PartyDetailsComponent implements OnInit, OnDestroy {
-	partyId: string;
+export class QuizDetailsComponent implements OnInit, OnDestroy {
+	quizId: string;
 	paramSub: Subscription;
-	party: Party;
+	quiz: Quiz;
 
 	constructor(
 		private route: ActivatedRoute
@@ -24,20 +25,20 @@ export class PartyDetailsComponent implements OnInit, OnDestroy {
 
 	ngOnInit() {
 		this.paramSub = this.route.params
-			.map(params => params['partyId'])
-			.subscribe(partyId => { 
-				this.partyId = partyId
+			.map(params => params['quizId'])
+			.subscribe(quizId => { 
+				this.quizId = quizId
 
-				this.party = Parties.findOne(this.partyId);
+				this.quiz = Quizes.findOne(this.quizId);
 			});
 	}
 
-	saveParty() {
-		Parties.update(this.party._id, {
+	saveQuiz() {
+		Quizes.update(this.quiz._id, {
 			$set: {
-				name: this.party.name,
-				description: this.party.description,
-				location: this.party.location
+				name: this.quiz.name,
+				description: this.quiz.description,
+				tScore: this.quiz.tScore
 			}
 		});
 	}

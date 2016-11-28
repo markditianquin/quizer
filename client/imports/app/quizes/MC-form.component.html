@@ -1,0 +1,47 @@
+<form [formGroup]="addForm" novalidate (ngSubmit)="addQ(addForm)">
+	<div>
+		<label>Question</label>
+		<input type="text" formControlName="question">
+	</div>
+
+	<div>
+		<label>Answer</label>
+		<input type="text" formControlName="answer">
+	</div>
+
+	<div>
+		<label>Question</label>
+		<input type="number" formControlName="score">
+	</div>
+
+	<div formArrayName="choices">
+		<div *ngFor="let ch of addForm.controls.choices.controls; let i=index">
+			<div>
+				<span>Choice {{i + 1}}</span>
+				<span *ngIf="addForm.controls.choices.controls.length > 1"
+					(click)="removeChoice(i)">x
+				</span>
+			</div>
+
+			<div [formGroupName]="i">
+				<div>
+					<label></label>
+					<input type="text" formControlName="choice">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div>
+    <a (click)="addChoice()" style="cursor: default">
+      Add another address +
+    </a>
+  </div>
+
+	<button type="submit" [disabled]="!addForm.valid">Add</button>
+
+	<div>
+    <div>addForm details:-</div>
+    <pre>Is addForm valid?: <br>{{addForm.valid | json}}</pre>
+    <pre>form value: <br>{{addForm.value | json}}</pre>
+  </div>
+</form>

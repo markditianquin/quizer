@@ -1,8 +1,9 @@
 <div>
-
 	<ul>
 		<li *ngFor="let quiz of quizes | async">
-			{{quiz.name}}
+			<a [routerLink]="['/quiz', quiz._id]"> {{quiz.name}} </a>
+			<p> {{quiz.description}} </p>
+			<p> {{quiz.tScore}} </p>
 			<button (click)="removeParty(quiz)">X</button>
 		</li>
 	</ul>
