@@ -14,6 +14,7 @@
 
 
 
+
 <mc-form [quizId]="quizId"></mc-form>
 <!-- <div>
 	<ul>
@@ -26,7 +27,7 @@
 	</ul>
 </div> -->
 
-<div>
+<div *ngIf="quiz">
 	<ul>
 		<li *ngFor="let q of quiz.questions">
 			{{q.question}}

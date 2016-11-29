@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
+import { Meteor } from 'meteor/meteor';
+import { MeteorObservable } from 'meteor-rxjs';
 import { Observable } from 'rxjs/Observable';
 
 import 'rxjs/add/operator/map';
@@ -18,7 +20,7 @@ export class QuizDetailsComponent implements OnInit, OnDestroy {
 	quizId: string;
 	paramSub: Subscription;
 	quiz: Quiz;
-	question: Observable<any[]>;
+	quizSub: Subscription;
 
 	constructor(
 		private route: ActivatedRoute
@@ -28,10 +30,15 @@ export class QuizDetailsComponent implements OnInit, OnDestroy {
 		this.paramSub = this.route.params
 			.map(params => params['quizId'])
 			.subscribe(quizId => { 
-				this.quizId = quizId
+				this.quizId = quizId;
 
-				this.quiz = Quizes.findOne(this.quizId);
+				if (this.quizSub) {
+					this.quizSub.unsubscribe();
+				}
 
+				this.quizSub = MeteorObservable.subscribe('quiz', this.quizId).subscribe(() => {
+					this.quiz = Quizes.findOne(this.quizId);
+				});
 			});
 	}
 
@@ -47,5 +54,6 @@ export class QuizDetailsComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy() {
 		this.paramSub.unsubscribe();
+		this.quizSub.unsubscribe();
 	}
 }
