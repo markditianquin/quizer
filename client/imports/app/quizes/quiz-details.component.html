@@ -27,10 +27,12 @@
 	</ul>
 </div> -->
 
-<div *ngIf="quiz">
+<div *ngIf="questions">
 	<ul>
-		<li *ngFor="let q of quiz.questions">
-			{{q.question}}
+		<li *ngFor="let q of questions | async">
+			<div *ngFor="let qq of q.questions">
+				{{qq.question}}
+			</div>
 		</li>
 	</ul>
 </div>

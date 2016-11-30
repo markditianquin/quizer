@@ -21,6 +21,8 @@ export class QuizDetailsComponent implements OnInit, OnDestroy {
 	paramSub: Subscription;
 	quiz: Quiz;
 	quizSub: Subscription;
+	qSub: Subscription;
+	questions: Observable<Quiz[]>;
 
 	constructor(
 		private route: ActivatedRoute
@@ -39,6 +41,14 @@ export class QuizDetailsComponent implements OnInit, OnDestroy {
 				this.quizSub = MeteorObservable.subscribe('quiz', this.quizId).subscribe(() => {
 					this.quiz = Quizes.findOne(this.quizId);
 				});
+
+				if (this.qSub) {
+					this.qSub.unsubscribe();
+				}
+
+				this.qSub = MeteorObservable.subscribe('quizes').subscribe(() => {
+					this.questions = Quizes.find({_id:this.quizId }).zone();
+				})
 			});
 	}
 
@@ -55,5 +65,6 @@ export class QuizDetailsComponent implements OnInit, OnDestroy {
 	ngOnDestroy() {
 		this.paramSub.unsubscribe();
 		this.quizSub.unsubscribe();
+		this.qSub.unsubscribe();
 	}
 }
