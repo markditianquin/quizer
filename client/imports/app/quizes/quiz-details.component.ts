@@ -62,6 +62,14 @@ export class QuizDetailsComponent implements OnInit, OnDestroy {
 		});
 	}
 
+	removeQ(question: Quiz): void {
+		Quizes.update({_id: this.quizId }, {
+			$pull: { questions: {
+				_id: question._id
+			}}
+		})
+	}
+
 	ngOnDestroy() {
 		this.paramSub.unsubscribe();
 		this.quizSub.unsubscribe();

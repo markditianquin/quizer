@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
+import { Mongo } from 'meteor/mongo';
 
 import { Quizes } from '../../../../both/collections/quizes.collection';
 import { Quiz, Question } from '../../../../both/models/quiz.model';
@@ -23,7 +24,6 @@ export class MCFormComponent implements OnInit {
 			question: ['', Validators.required],
 			answer: ['', Validators.required],
 			score: ['', Validators.required],
-			type: ['mc'],
 			choices: this.formBuilder.array([
 					this.initChoice(),
 				])
@@ -48,12 +48,20 @@ export class MCFormComponent implements OnInit {
 
 	addQ(model: Question): void {
 
-		console.log(this.addForm.value);
+		//console.log(this.addForm.value);
 
 		if (this.addForm.valid) {
+
+			const ss = new Mongo.ObjectID;
+			const v = ss['_str'];
+			var value = this.addForm.value;
+			value._id = v;
+			value.type = 'mc';
+			console.log(value);
+			
 			Quizes.update({_id: this.quizId}, {
 				$push: {
-					questions: model['value']
+					questions: value
 				}
 			})
 
