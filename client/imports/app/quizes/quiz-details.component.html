@@ -32,6 +32,9 @@
 		<li *ngFor="let qq of q.questions">
 			{{qq.question}}
 			<button (click)="removeQ(qq)">x</button>
+				<ul *ngFor="let qqq of qq.choices">
+					{{qqq.choice}}
+				</ul>
 		</li>
 	</li>
 </div>

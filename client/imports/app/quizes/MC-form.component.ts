@@ -14,6 +14,7 @@ import template from './MC-form.component.html';
 export class MCFormComponent implements OnInit {
 	@Input() quizId: string;
 	addForm: FormGroup;
+	answer: any;
 
 	constructor(
 		private formBuilder: FormBuilder
@@ -38,7 +39,13 @@ export class MCFormComponent implements OnInit {
 
 	addChoice() {
 		const control = <FormArray>this.addForm.controls['choices'];
-		control.push(this.initChoice());
+
+		if(control.length === 4) {
+			return;
+		} else {
+			control.push(this.initChoice());
+		}
+		
 	}
 
 	removeChoice(i: number) {
@@ -57,7 +64,9 @@ export class MCFormComponent implements OnInit {
 			var value = this.addForm.value;
 			value._id = v;
 			value.type = 'mc';
-			console.log(value);
+			value.choices.push({choice: this.addForm.controls['answer'].value});
+
+			//console.log(value);
 			
 			Quizes.update({_id: this.quizId}, {
 				$push: {

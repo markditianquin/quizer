@@ -14,12 +14,16 @@
 		<input type="number" formControlName="score">
 	</div>
 
+	<div>
+		<label>Choice 1</label> <br>
+		<input type="text" [value]="addForm.controls.answer.value" disabled="true">
+	</div>
 	<div formArrayName="choices">
 		<div *ngFor="let ch of addForm.controls.choices.controls; let i=index">
 			<div>
-				<span>Choice {{i + 1}}</span>
-				<span *ngIf="addForm.controls.choices.controls.length > 1"
-					(click)="removeChoice(i)">x
+				<span>Choice {{i + 2}}</span>
+				<span *ngIf="addForm.controls.choices.controls.length > 1 "
+					(click)="removeChoice(i)" style="cursor: default">x
 				</span>
 			</div>
 
