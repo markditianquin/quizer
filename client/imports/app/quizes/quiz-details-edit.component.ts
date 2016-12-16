@@ -5,18 +5,22 @@ import { Meteor } from 'meteor/meteor';
 import { MeteorObservable } from 'meteor-rxjs';
 import { Observable } from 'rxjs/Observable';
 
+import { Injectable } from '@angular/core';
+import { CanActivate } from '@angular/router';
+
 import 'rxjs/add/operator/map';
 
 import { Quizes } from '../../../../both/collections/quizes.collection';
 import { Quiz } from '../../../../both/models/quiz.model';
 
-import template from './quiz-details.component.html';
+import template from './quiz-details-edit.component.html';
 
 @Component({
-	selector: 'quiz-details',
+	selector: 'quiz-details-edit',
 	template
 })
-export class QuizDetailsComponent implements OnInit, OnDestroy {
+@Injectable()
+export class QuizDetailsEditComponent implements CanActivate, OnInit, OnDestroy {
 	quizId: string;
 	paramSub: Subscription;
 	quiz: Quiz;
@@ -68,6 +72,11 @@ export class QuizDetailsComponent implements OnInit, OnDestroy {
 				_id: question._id
 			}}
 		})
+	}
+
+	canActivate() {
+		// console.log(this.quiz.owner);
+		return (!!Meteor.userId());
 	}
 
 	ngOnDestroy() {

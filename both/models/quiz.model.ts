@@ -5,6 +5,7 @@ export interface Quiz extends CollectionObject {
 	description?: string;
 	tScore?: number;
 	questions?: Question[];
+	owner?: string;
 }
 
 export interface Question extends CollectionObject {

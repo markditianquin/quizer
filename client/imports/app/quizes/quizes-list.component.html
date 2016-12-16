@@ -1,7 +1,11 @@
 <div>
+	<quizes-form></quizes-form>
+	<login-buttons></login-buttons>
+
 	<ul>
 		<li *ngFor="let quiz of quizes | async">
-			<a [routerLink]="['/quiz', quiz._id]"> {{quiz.name}} </a>
+			<a> {{quiz.name}} </a>
+			<button [routerLink]="['/quiz', quiz._id]">Edit</button>
 			<p> {{quiz.description}} </p>
 			<p> {{quiz.tScore}} </p>
 			<button (click)="removeParty(quiz)">X</button>
