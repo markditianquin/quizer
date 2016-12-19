@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
+import { Router } from '@angular/router';
 
 import 'rxjs/add/operator/map';
 
@@ -29,7 +30,7 @@ export class QuizDetailsEditComponent implements CanActivate, OnInit, OnDestroy 
 	questions: Observable<Quiz[]>;
 
 	constructor(
-		private route: ActivatedRoute
+		private route: ActivatedRoute, private router: Router
 	) {}
 
 	ngOnInit() {
@@ -74,8 +75,18 @@ export class QuizDetailsEditComponent implements CanActivate, OnInit, OnDestroy 
 		})
 	}
 
-	canActivate() {
+	canActivate(): Observable<boolean> | boolean{
 		// console.log(this.quiz.owner);
+		const quiz = Quizes.findOne(this.quizId);
+
+		// if (!!Meteor.userId()) {
+
+		// 	return true;
+		// } else {
+		// 	//this.router.navigate(['']);
+		// 	return false;
+		// }
+		
 		return (!!Meteor.userId());
 	}
 
